@@ -165,47 +165,42 @@
   color: #f87171;
 }
 
-/* Example Prompts */
-.lickui-examples {
-  text-align: center;
-  padding: 16px;
-}
-
-.lickui-examples p {
-  margin: 0 0 12px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.lickui-examples-grid {
+/* Quick Actions Bar - Always visible above input */
+.lickui-quick-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: rgba(139, 92, 246, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .lickui-example-btn {
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 11px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 16px;
-  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .lickui-example-btn:hover {
   background: rgba(139, 92, 246, 0.3);
+  border-color: rgba(139, 92, 246, 0.5);
   color: white;
+  transform: translateY(-1px);
 }
 
 /* Input Area */
 .lickui-input-area {
-  padding: 16px;
+  padding: 12px 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   gap: 8px;
+  align-items: flex-end;
 }
 
 .lickui-input {
@@ -217,7 +212,13 @@
   color: white;
   font-size: 13px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, height 0.15s;
+  resize: none;
+  height: 40px;
+  max-height: 100px;
+  line-height: 20px;
+  font-family: inherit;
+  overflow-y: hidden;
 }
 
 .lickui-input::placeholder {

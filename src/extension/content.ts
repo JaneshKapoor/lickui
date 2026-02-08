@@ -77,19 +77,15 @@ class LickUI {
         Selected: <code id="lickui-selected-path"></code>
         <button id="lickui-clear-selection" style="margin-left:auto;background:none;border:none;color:#a78bfa;cursor:pointer;font-size:11px;">✕</button>
       </div>
-      <div id="lickui-messages" class="lickui-messages">
-        <div class="lickui-examples">
-          <p>What would you like to change?</p>
-          <div class="lickui-examples-grid">
-            <button class="lickui-example-btn" data-prompt="[SELECT]">📍 Select element</button>
-            <button class="lickui-example-btn" data-prompt="Apply dark mode to this page">Dark mode</button>
-            <button class="lickui-example-btn" data-prompt="Hide the navigation bar">Hide nav</button>
-            <button class="lickui-example-btn" data-prompt="Make all text larger">Larger text</button>
-          </div>
-        </div>
+      <div id="lickui-messages" class="lickui-messages"></div>
+      <div class="lickui-quick-actions">
+        <button class="lickui-example-btn" data-prompt="[SELECT]">📍 Select element</button>
+        <button class="lickui-example-btn" data-prompt="Apply dark mode to this page">🌙 Dark mode</button>
+        <button class="lickui-example-btn" data-prompt="Hide the navigation bar">🙈 Hide nav</button>
+        <button class="lickui-example-btn" data-prompt="Make all text larger">🔤 Larger text</button>
       </div>
       <div class="lickui-input-area">
-        <input type="text" class="lickui-input" id="lickui-chat-input" placeholder="Describe any UI change you want..." />
+        <textarea class="lickui-input" id="lickui-chat-input" placeholder="Describe any UI change..." rows="1"></textarea>
         <button class="lickui-send-btn" id="lickui-send-btn">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -101,19 +97,29 @@ class LickUI {
 
         // Get references
         this.messagesContainer = this.panel.querySelector("#lickui-messages");
-        this.input = this.panel.querySelector("#lickui-chat-input");
+        this.input = this.panel.querySelector("#lickui-chat-input") as HTMLInputElement;
 
-        // Event listeners
+        // Event listeners - support Shift+Enter for new line, Enter to send
         this.input?.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") this.handleSend();
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                this.handleSend();
+            }
+            // Shift+Enter allows default behavior (new line in textarea)
+        });
+
+        // Auto-resize textarea
+        this.input?.addEventListener("input", () => {
+            if (this.input) {
+                this.input.style.height = "auto";
+                this.input.style.height = Math.min(this.input.scrollHeight, 100) + "px";
+            }
         });
 
         this.panel.querySelector("#lickui-send-btn")?.addEventListener("click", () => this.handleSend());
         this.panel.querySelector("#lickui-clear-selection")?.addEventListener("click", () => this.clearSelection());
 
-
-
-        // Example prompts
+        // Example prompts - attach to all buttons
         this.panel.querySelectorAll(".lickui-example-btn").forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 const prompt = (e.target as HTMLElement).dataset.prompt;
@@ -128,6 +134,12 @@ class LickUI {
 
         // Initialize system prompt
         this.initConversation();
+
+        // Show welcome message
+        this.addMessage({
+            role: "assistant",
+            content: "👋 Hi! Select an element or describe what you want to change."
+        });
     }
 
     private initConversation() {

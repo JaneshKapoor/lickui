@@ -15,26 +15,22 @@
         Selected: <code id="lickui-selected-path"></code>
         <button id="lickui-clear-selection" style="margin-left:auto;background:none;border:none;color:#a78bfa;cursor:pointer;font-size:11px;">\u2715</button>
       </div>
-      <div id="lickui-messages" class="lickui-messages">
-        <div class="lickui-examples">
-          <p>What would you like to change?</p>
-          <div class="lickui-examples-grid">
-            <button class="lickui-example-btn" data-prompt="[SELECT]">\u{1F4CD} Select element</button>
-            <button class="lickui-example-btn" data-prompt="Apply dark mode to this page">Dark mode</button>
-            <button class="lickui-example-btn" data-prompt="Hide the navigation bar">Hide nav</button>
-            <button class="lickui-example-btn" data-prompt="Make all text larger">Larger text</button>
-          </div>
-        </div>
+      <div id="lickui-messages" class="lickui-messages"></div>
+      <div class="lickui-quick-actions">
+        <button class="lickui-example-btn" data-prompt="[SELECT]">\u{1F4CD} Select element</button>
+        <button class="lickui-example-btn" data-prompt="Apply dark mode to this page">\u{1F319} Dark mode</button>
+        <button class="lickui-example-btn" data-prompt="Hide the navigation bar">\u{1F648} Hide nav</button>
+        <button class="lickui-example-btn" data-prompt="Make all text larger">\u{1F524} Larger text</button>
       </div>
       <div class="lickui-input-area">
-        <input type="text" class="lickui-input" id="lickui-chat-input" placeholder="Describe any UI change you want..." />
+        <textarea class="lickui-input" id="lickui-chat-input" placeholder="Describe any UI change..." rows="1"></textarea>
         <button class="lickui-send-btn" id="lickui-send-btn">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
       </div>
-    `,this.root.appendChild(this.panel),this.messagesContainer=this.panel.querySelector("#lickui-messages"),this.input=this.panel.querySelector("#lickui-chat-input"),this.input?.addEventListener("keydown",s=>{s.key==="Enter"&&this.handleSend()}),this.panel.querySelector("#lickui-send-btn")?.addEventListener("click",()=>this.handleSend()),this.panel.querySelector("#lickui-clear-selection")?.addEventListener("click",()=>this.clearSelection()),this.panel.querySelectorAll(".lickui-example-btn").forEach(s=>{s.addEventListener("click",t=>{let e=t.target.dataset.prompt;e==="[SELECT]"?this.startElementSelection():e&&this.input&&(this.input.value=e,this.handleSend())})}),this.initConversation()}initConversation(){this.conversationHistory=[{role:"user",content:`You are LickUI, an AI that modifies website UI using CSS and DOM manipulation.
+    `,this.root.appendChild(this.panel),this.messagesContainer=this.panel.querySelector("#lickui-messages"),this.input=this.panel.querySelector("#lickui-chat-input"),this.input?.addEventListener("keydown",s=>{s.key==="Enter"&&!s.shiftKey&&(s.preventDefault(),this.handleSend())}),this.input?.addEventListener("input",()=>{this.input&&(this.input.style.height="auto",this.input.style.height=Math.min(this.input.scrollHeight,100)+"px")}),this.panel.querySelector("#lickui-send-btn")?.addEventListener("click",()=>this.handleSend()),this.panel.querySelector("#lickui-clear-selection")?.addEventListener("click",()=>this.clearSelection()),this.panel.querySelectorAll(".lickui-example-btn").forEach(s=>{s.addEventListener("click",t=>{let e=t.target.dataset.prompt;e==="[SELECT]"?this.startElementSelection():e&&this.input&&(this.input.value=e,this.handleSend())})}),this.initConversation(),this.addMessage({role:"assistant",content:"\u{1F44B} Hi! Select an element or describe what you want to change."})}initConversation(){this.conversationHistory=[{role:"user",content:`You are LickUI, an AI that modifies website UI using CSS and DOM manipulation.
 
 When the user describes a change, respond ONLY with valid JSON in this exact format:
 {
