@@ -1,0 +1,1 @@
+"use strict";(()=>{console.log("[LickUI] Background service worker loaded");chrome.runtime.onInstalled.addListener(e=>{e.reason==="install"?console.log("[LickUI] Extension installed"):e.reason==="update"&&console.log("[LickUI] Extension updated")});})();

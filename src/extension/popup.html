@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
+      color: white;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo svg {
+      width: 20px;
+      height: 20px;
+    }
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .status {
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .status-text {
+      font-size: 13px;
+      color: #4ade80;
+    }
+    .instructions {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+    .instructions strong {
+      color: white;
+    }
+    .instructions ol {
+      margin-top: 8px;
+      padding-left: 20px;
+    }
+    .instructions li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </div>
+    <div>
+      <h1>LickUI</h1>
+      <div class="subtitle">AI Website Editor</div>
+    </div>
+  </div>
+
+  <div class="status">
+    <span class="status-dot"></span>
+    <span class="status-text">Active on all websites</span>
+  </div>
+
+  <div class="instructions">
+    <strong>How to use:</strong>
+    <ol>
+      <li>Go to any website</li>
+      <li>Click the purple chat button (bottom-right)</li>
+      <li>Describe UI changes you want</li>
+    </ol>
+  </div>
+</body>
+</html>

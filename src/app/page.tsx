@@ -6,7 +6,10 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import UrlInput from "@/components/UrlInput";
 import PreviewFrame from "@/components/PreviewFrame";
-import AiChatTeaser from "@/components/AiChatTeaser";
+import AiChat from "@/components/AiChat";
+
+// Get Tambo API key from environment variable
+const TAMBO_API_KEY = process.env.NEXT_PUBLIC_TAMBO_API_KEY;
 
 /**
  * LickUI Landing Page
@@ -17,13 +20,18 @@ import AiChatTeaser from "@/components/AiChatTeaser";
 export default function Home() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedElement, setSelectedElement] = useState<{
+    path: string;
+    element: HTMLElement;
+  } | null>(null);
 
-  // Simulate loading a website (mock - no real backend)
+  // Load a website via proxy
   const handleUrlSubmit = async (url: string) => {
     setIsLoading(true);
+    setSelectedElement(null);
 
-    // Simulate network delay for loading animation
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Small delay for UX
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     setPreviewUrl(url);
     setIsLoading(false);
@@ -32,6 +40,12 @@ export default function Home() {
   // Reset to initial state
   const handleReset = () => {
     setPreviewUrl(null);
+    setSelectedElement(null);
+  };
+
+  // Handle element selection from preview
+  const handleElementSelect = (element: HTMLElement, path: string) => {
+    setSelectedElement({ element, path });
   };
 
   return (
@@ -42,7 +56,7 @@ export default function Home() {
       {/* Main Content */}
       <div className="relative pt-24 pb-16 px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Hero & Input Section - Always visible but positioned differently */}
+          {/* Hero & Input Section */}
           <AnimatePresence mode="wait">
             {!previewUrl ? (
               // Initial state: Centered hero and input
@@ -83,11 +97,17 @@ export default function Home() {
                   </button>
                 </motion.div>
 
-                {/* Preview Frame */}
-                <PreviewFrame url={previewUrl} />
+                {/* Preview Frame with element selection */}
+                <PreviewFrame
+                  url={previewUrl}
+                  onElementSelect={handleElementSelect}
+                />
 
-                {/* AI Chat Teaser */}
-                <AiChatTeaser />
+                {/* AI Chat - Functional with Tambo */}
+                <AiChat
+                  selectedElement={selectedElement}
+                  apiKey={TAMBO_API_KEY}
+                />
               </motion.div>
             )}
           </AnimatePresence>
