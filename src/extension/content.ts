@@ -8,8 +8,8 @@
 // Declare chrome for TypeScript
 declare const chrome: any;
 
-// OPENAI API KEY - Embedded for direct use
-const OPENAI_API_KEY = "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";
+// OPENAI API KEY - Injected at build time from .env file
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 
 interface Message {
     role: "user" | "assistant";
